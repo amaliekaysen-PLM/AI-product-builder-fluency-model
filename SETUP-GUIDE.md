@@ -7,64 +7,39 @@ This guide walks you through putting the fluency model on a live URL and setting
 ## What you're setting up
 
 - **GitHub** — stores the code, tracks who changed what, lets everyone work on their own copy
-- **Vercel** — watches the GitHub repo and auto-publishes a live website every time someone pushes a change
+- **GitHub Pages** — auto-publishes a live website every time someone pushes a change (free, built into GitHub)
 
-The result: a URL like `product-builder-fluency.vercel.app` that always shows the latest version.
+The result: a URL like `amaliekaysen-plm.github.io/AI-product-builder-fluency-model/` that always shows the latest version.
 
 ---
 
-## Step 1: Create the GitHub repo
+## Step 1: Enable GitHub Pages
 
-1. Go to [github.com/new](https://github.com/new)
-2. Name it something like `product-builder-fluency-model`
-3. Set it to **Private** (you can change this later)
-4. Do NOT check "Add a README" — we already have files
-5. Click **Create repository**
-6. You'll see a page with setup instructions — keep this tab open, you'll need the URL
+1. Go to your repo: [github.com/amaliekaysen-PLM/AI-product-builder-fluency-model](https://github.com/amaliekaysen-PLM/AI-product-builder-fluency-model)
+2. Click **Settings** (top menu bar)
+3. In the left sidebar, click **Pages**
+4. Under "Build and deployment" → Source, select **GitHub Actions**
+5. That's it — the deploy workflow is already in the code
 
-## Step 2: Push the project to GitHub
+## Step 2: Push the latest code
 
-Open **Terminal** on your Mac (search for it in Spotlight) and run these commands one at a time.
-
-First, navigate to the project folder:
+Open **Terminal** on your Mac and run:
 ```
 cd ~/Documents/Claude/Projects/AI\ Upskilling
-```
-
-Then set up git and push:
-```
-git init
 git add .
-git commit -m "Initial fluency model"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/product-builder-fluency-model.git
-git push -u origin main
+git commit -m "Add GitHub Pages deploy"
+git push
 ```
 
-Replace `YOUR-USERNAME` with your GitHub username (or the org name if you created it under an org).
+This pushes the deploy workflow. GitHub will automatically build and publish the site. Give it 1–2 minutes, then visit:
 
-> **If git asks for credentials:** GitHub now requires a personal access token instead of a password. Go to GitHub → Settings → Developer settings → Personal access tokens → Generate new token. Give it `repo` scope. Use the token as your password when prompted.
+**https://amaliekaysen-plm.github.io/AI-product-builder-fluency-model/**
 
-## Step 3: Connect Vercel for auto-deploy
+## Step 3: Invite the UX leaders
 
-1. Go to [vercel.com](https://vercel.com) and sign in with your GitHub account
-2. Click **Add New → Project**
-3. Find and select your `product-builder-fluency-model` repo
-4. Vercel auto-detects it's a Vite project — the defaults are correct
-5. Click **Deploy**
-6. Wait ~30 seconds. You'll get a live URL like `product-builder-fluency-model.vercel.app`
-
-That's it. Every time someone pushes to `main`, Vercel rebuilds and updates the live site automatically.
-
-## Step 4: Invite the UX leaders
-
-**On GitHub:**
-- Go to the repo → Settings → Collaborators → Add people
-- Add each UX leader by their GitHub username or email
-- They'll get an invite they need to accept
-
-**On Vercel:**
-- No action needed — Vercel deploys from GitHub automatically, so anyone who can push to the repo will see their changes go live
+1. Go to the repo → **Settings** → **Collaborators** → **Add people**
+2. Add each UX leader by their GitHub username or email
+3. They'll get an invite they need to accept
 
 ---
 
@@ -77,8 +52,8 @@ Each UX leader can work on the model from their own Claude Cowork setup:
 1. **Clone the repo** to get a local copy:
    ```
    cd ~/Documents/Claude/Projects
-   git clone https://github.com/YOUR-USERNAME/product-builder-fluency-model.git
-   cd product-builder-fluency-model
+   git clone https://github.com/amaliekaysen-PLM/AI-product-builder-fluency-model.git
+   cd AI-product-builder-fluency-model
    ```
 
 2. **Select the folder** in Claude Cowork (the folder picker)
@@ -87,13 +62,13 @@ Each UX leader can work on the model from their own Claude Cowork setup:
 
 4. **Push the changes** when you're happy:
    ```
-   cd ~/Documents/Claude/Projects/product-builder-fluency-model
+   cd ~/Documents/Claude/Projects/AI-product-builder-fluency-model
    git add .
    git commit -m "Updated Stage 3 Sense behaviors"
    git push
    ```
 
-5. Vercel auto-deploys. The live site updates in ~30 seconds.
+5. GitHub Pages auto-deploys. The live site updates in ~1–2 minutes.
 
 ### Option B: Edit directly on GitHub
 
@@ -104,7 +79,7 @@ For quick text changes, anyone can edit directly in the browser:
 3. Click the pencil icon (Edit)
 4. Make your changes
 5. Click "Commit changes"
-6. Vercel auto-deploys
+6. GitHub Pages auto-deploys
 
 ### Avoiding conflicts
 
@@ -121,7 +96,7 @@ If two people edit the same file at the same time, git will flag a conflict. To 
 If you want to see your changes before pushing:
 
 ```
-cd ~/Documents/Claude/Projects/product-builder-fluency-model
+cd ~/Documents/Claude/Projects/AI-product-builder-fluency-model
 npm install
 npm run dev
 ```
@@ -133,7 +108,8 @@ This starts a local server at `http://localhost:5173`. Changes to the code show 
 ## Project structure
 
 ```
-product-builder-fluency-model/
+AI-product-builder-fluency-model/
+├── .github/workflows/deploy.yml         ← Auto-deploy config (don't touch)
 ├── src/
 │   ├── ProductBuilderFluencyModel.jsx   ← THE main file (all the content)
 │   └── main.jsx                         ← App entry point (don't touch)
