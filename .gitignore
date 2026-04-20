@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+*.local
+*.timestamp-*
+# Original artifact file (canonical version is src/ProductBuilderFluencyModel.jsx)
+product-builder-fluency-model.jsx
