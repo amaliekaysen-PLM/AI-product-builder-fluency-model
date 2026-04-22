@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { ChevronDown, ChevronRight, Target, BookOpen, Wrench, Users, Brain, Zap, Eye, Layers, BarChart3, Lightbulb, ArrowRight, CheckCircle2, Circle, X, Info, Filter, Plus, Trash2, UserPlus, PieChart, Calendar, Headphones, ExternalLink, GraduationCap, ClipboardList } from "lucide-react";
+import { ChevronDown, ChevronRight, Target, BookOpen, Wrench, Users, Brain, Zap, Eye, Layers, BarChart3, Lightbulb, ArrowRight, CheckCircle2, Circle, X, Info, Filter, Plus, Trash2, UserPlus, PieChart, Calendar, Headphones, ExternalLink, GraduationCap, ClipboardList, Compass } from "lucide-react";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -18,6 +18,7 @@ const VALUE_STREAMS = [
   { id: "optimize", name: "Optimize", subtitle: "Metrics & Learning", icon: "BarChart3", description: "Measuring success, running experiments, using data to continuously improve, and closing the learning loop." },
   { id: "craft", name: "AI Product Craft", subtitle: "Building AI Experiences", icon: "Brain", description: "Conceiving, scoping, designing, and shipping AI-powered and agentic experiences for customers." },
   { id: "ways", name: "Ways of Working", subtitle: "Collaboration & Growth", icon: "Users", description: "Integrating AI into daily workflow, collaborating with the team, and contributing to the community's growth." },
+  { id: "mindset", name: "Mindset", subtitle: "Mental Models & Attitudes", icon: "Compass", description: "How you think about AI — comfort with uncertainty, willingness to experiment, AI-first framing, and evolving your professional identity." },
 ];
 
 const ROLE_COLORS = {
@@ -220,6 +221,38 @@ const RUBRIC = {
       shared: "People don't describe you as 'using AI' — it's just how you work. You influence practices beyond your team. New people learn by watching you.",
       signal: "When someone asks 'do you use AI?', the question feels odd — like asking 'do you use the internet?' It's just part of everything."
     }
+  },
+  mindset: {
+    1: {
+      pm: "Views AI as a tech trend that engineering deals with. Sees the PM role as defined by traditional competencies — stakeholder management, roadmaps, specs. May feel threatened by AI or dismissive of its relevance. Comfort zone is what's worked before.",
+      ux: "Sees AI as a threat to craft — 'AI can't do real design.' Protective of traditional design process and skills. May worry that AI-generated design devalues the profession. Equates quality with time spent. Views AI tools as shortcuts that compromise quality rather than enablers that expand what's possible.",
+      shared: "AI is someone else's problem. Your professional identity is built on traditional skills, and AI feels like it might undermine them rather than amplify them.",
+      signal: "When AI comes up in a meeting, your instinct is to defend why your current approach works fine, or you tune out because it feels like an engineering topic."
+    },
+    2: {
+      pm: "Curious and open. Recognizes AI is changing the game but unsure how it changes the PM role specifically. Willing to experiment but still anchors identity in traditional PM competencies. Starting to see that AI can save time on low-value tasks.",
+      ux: "Beginning to see AI as an amplifier rather than a threat. Has experienced moments where AI surprised them with quality output. Still protective of craft but open to exploring. Starting to question whether 'time spent = quality.' Curious about how other designers are using AI.",
+      shared: "The mental shift has started: from 'AI might replace me' to 'AI might help me.' You're experimenting, but your professional identity hasn't changed yet.",
+      signal: "You've had at least one 'wow' moment with AI that made you reconsider what's possible. You're curious but cautious."
+    },
+    3: {
+      pm: "Embraces AI-first problem framing — asks 'could AI solve this?' before defaulting to traditional approaches. Comfortable with probabilistic outputs. Values judgment and taste over execution speed. Sees the PM role evolving toward strategic decision-making.",
+      ux: "Comfortable with AI as a creative partner. Has internalized that great design is about judgment, empathy, and taste — not pixel-pushing speed. Embraces 'build to learn' as a design philosophy. Sees AI-generated options as raw material that a great designer curates and elevates. Actively redefining what 'design craft' means in the AI era.",
+      shared: "You've stopped defending your old way of working and started defining a new one. You're comfortable saying 'I don't know how AI will change this, but I'm going to find out.'",
+      signal: "You naturally frame problems with AI as a first-class option. You're comfortable with 'good enough' outputs that you refine with judgment rather than demanding perfection from the start."
+    },
+    4: {
+      pm: "Professional identity has evolved: you're a Product Builder, not just a PM. Comfortable in ambiguity — you work at the frontier where product, design, and technology blur. You lead others through the discomfort of change. AI fluency is a core leadership competency, not a nice-to-have.",
+      ux: "Professional identity has expanded beyond 'designer.' You see yourself as a creative technologist, experience architect, or product builder who happens to lead with design thinking. Comfortable challenging the entire design process. Advocates for rethinking team structures, skill requirements, and definitions of quality. Mentors others through the identity shift.",
+      shared: "You've stopped asking 'how does AI fit into my role?' and started asking 'what role does this era need?' You're comfortable with the answer being different from what you expected.",
+      signal: "You actively reshape how your team thinks about their roles. You're energized by ambiguity rather than threatened by it."
+    },
+    5: {
+      pm: "Fully post-role mindset. You fluidly move between strategy, design, building, and optimization. AI is not a tool you use — it's the medium you work in, like language or numbers. You define what great looks like for the next generation.",
+      ux: "Design is a lens, not a job description. You think in systems, experiences, and outcomes — using whatever medium (code, design, AI, conversation) fits. Your creative confidence comes from taste and judgment, not technique. You're shaping what 'product maker' means for the industry — writing, speaking, or demonstrating new ways of working that didn't exist before.",
+      shared: "The question isn't 'what's my role?' but 'what outcome matters?' You move fluidly across disciplines. Your identity is tied to impact, not job title.",
+      signal: "You can't remember the last time you thought about where PM ends and UX begins. You just build things that matter."
+    }
   }
 };
 
@@ -273,6 +306,13 @@ const TOOLS = {
     { name: "AI Friday Demos", use: "Weekly knowledge sharing — present an AI use case, what worked, what didn't", stages: [2,3,4,5], roles: ["pm","ux"] },
     { name: "Maven / Product School", use: "AI PM Bootcamp, Agent Certification, AIPC — structured external learning", stages: [2,3,4,5], roles: ["pm"] },
     { name: "IxDF / NNg AI courses", use: "Interaction Design Foundation and Nielsen Norman Group AI-specific UX courses", stages: [2,3,4,5], roles: ["ux"] },
+  ],
+  mindset: [
+    { name: "Shape of AI", use: "AI UX pattern library — study how AI interactions are designed across the industry to build design intuition", stages: [2,3,4,5], roles: ["pm","ux"] },
+    { name: "AI Friday Demos", use: "Weekly show-and-tell that normalizes experimentation, celebrates learning from failure, and builds team confidence", stages: [2,3,4,5], roles: ["pm","ux"] },
+    { name: "SVPG / Marty Cagan content", use: "Build-to-learn philosophy, product vs. project mindset, empowered product teams", stages: [2,3,4], roles: ["pm","ux"] },
+    { name: "Google PAIR Guidebook", use: "Mental models for human-AI interaction — helps shift thinking about what AI products should feel like", stages: [3,4,5], roles: ["pm","ux"] },
+    { name: "Peer 1:1 mindset check-ins", use: "Regular conversations about identity, comfort zones, and growth — not just skills", stages: [2,3,4], roles: ["pm","ux"] },
   ],
 };
 
@@ -354,6 +394,7 @@ const LEARNING_EXPANDED = {
     { name: "Microsoft HAX Toolkit", url: "https://microsoft.com/en-us/haxtoolkit/", free: true, stages: [3,4], roles: ["ux"], hours: "3h", description: "Free toolkit. 18 research-validated guidelines for human-AI interaction. Includes workbook and playbook for failure scenarios." },
     { name: "Marily Nika — AI PM Bootcamp (Maven)", url: "https://maven.com", free: false, stages: [3,4], roles: ["pm"], hours: "25h", description: "Cohort-based. The gold standard for AI PM training. Building AI products, evaluating models, measuring success." },
     { name: "Marily Nika — Agent Certification (Maven)", url: "https://maven.com", free: false, stages: [4,5], roles: ["pm","ux"], hours: "20h", description: "Advanced cohort-based course on designing and building agentic AI products." },
+    { name: "Shape of AI — AI UX Pattern Library", url: "https://www.shapeof.ai/", free: true, stages: [2,3,4,5], roles: ["ux","pm"], hours: "Self-paced reference", description: "Comprehensive, evolving library of AI UX patterns: wayfinders, trust builders, governors, tuners, identifiers. Essential reference for anyone designing or specifying AI experiences. By Emily Campbell." },
   ],
   podcasts: [
     { name: "Lenny's Podcast", url: "https://lennyspodcast.com", roles: ["pm","ux"], description: "Top product podcast. Frequent AI episodes with product leaders from OpenAI, Anthropic, and top companies on building AI products." },
@@ -485,7 +526,7 @@ const LEADER_PLAYBOOK = [
 
 // ─── ICON HELPER ─────────────────────────────────────────────────────────────
 
-const IconMap = { Eye, Lightbulb, Layers, BarChart3, Brain, Users };
+const IconMap = { Eye, Lightbulb, Layers, BarChart3, Brain, Users, Compass };
 
 function StreamIcon({ name, size = 18, className }) {
   const Icon = IconMap[name] || Target;

@@ -4,6 +4,14 @@ This guide walks you through putting the fluency model on a live URL and setting
 
 ---
 
+## Quick access
+
+- **Live site:** https://amaliekaysen-plm.github.io/AI-product-builder-fluency-model/
+- **Password:** econ2026
+- **GitHub repo:** https://github.com/amaliekaysen-PLM/AI-product-builder-fluency-model
+
+---
+
 ## What you're setting up
 
 - **GitHub** — stores the code, tracks who changed what, lets everyone work on their own copy
